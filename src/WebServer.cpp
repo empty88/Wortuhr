@@ -65,8 +65,6 @@ void ShowPage(String content, String script, String style) {
 	page += FPSTR(HTTP_CONTAINER);
 
 	// replacements
-	content.replace("{ct}", String(hour()) + ":" + String(minute()));
-	content.replace("{ct12}", String(hourFormat12()) + ":" + String(minute()));
 	content.replace("{menu}", FPSTR(HTTP_MENU));
 	content.replace("{onmessage}", onmessage);
 	content.replace("{offmessage}", offmessage);
@@ -330,7 +328,7 @@ void HandleGetLogs() {
 }
 
 void HandleGetTime() {
-	char timestr[19];
+	char timestr[21];
 	int int_hour = hour();
 	if (summertime_EU(year(), month(), day(), hour(), 1)) {
 		if (int_hour == 24) {
