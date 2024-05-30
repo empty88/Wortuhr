@@ -77,6 +77,7 @@ void wordClock(bool force) {
 			strip.SetPixelColor(113, black);
 			strip.SetPixelColor(112, black);
 			strip.SetPixelColor(111, black);
+			if(GLOBAL::ItIsTimeout) turnItIsOff();
 			//Log("Minute 1");
 			break;
 		case 2:
@@ -118,7 +119,7 @@ void wordClock(bool force) {
 		//clearLeds();
 
 		clockText = "";
-		clockText += EsIst();
+		if (GLOBAL::ItIs) clockText += EsIst();
 		switch (step) {
 		case 1:
 			clockText += pre_fuenf() + nach() + Stunde();
@@ -169,6 +170,13 @@ void wordClock(bool force) {
 void SetClockWords(std::list<int> letters) {
 	for (std::list<int>::const_iterator iterator = letters.begin(), end = letters.end(); iterator != end; ++iterator) {
 		clockLetters.push_back(*iterator);
+	}
+}
+
+void turnItIsOff() {
+	for (std::list<int>::const_iterator iterator = esist_arr.begin(), end = esist_arr.end(); iterator != end; ++iterator) {
+		SetPixelColor(*iterator, black,true);
+		Show();
 	}
 }
 

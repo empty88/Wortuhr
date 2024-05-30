@@ -19,6 +19,8 @@ int GLOBAL::Brightness = BRIGHTNESS_MID;
 String GLOBAL::WlanSSID = "";
 String GLOBAL::WlanPasswd = "";
 String GLOBAL::NtpServerIP = "";
+bool GLOBAL::ItIs = true;
+bool GLOBAL::ItIsTimeout = true;
 
 void readConfig() {
 	LittleFS.begin();
@@ -40,6 +42,8 @@ void readConfig() {
 		GLOBAL::WlanSSID = removeTrailingCR(configFile.readStringUntil('\n'));
 		GLOBAL::WlanPasswd= removeTrailingCR(configFile.readStringUntil('\n'));
 		GLOBAL::NtpServerIP= removeTrailingCR(configFile.readStringUntil('\n'));
+		GLOBAL::ItIs= removeTrailingCR(configFile.readStringUntil('\n'));
+		GLOBAL::ItIsTimeout= removeTrailingCR(configFile.readStringUntil('\n'));
 		configFile.close();
 	}
 	else {
@@ -66,6 +70,8 @@ void saveConfig() {
 	configFile.println(GLOBAL::WlanSSID); //WLAN SSID
 	configFile.println(GLOBAL::WlanPasswd); //WLAN Password
 	configFile.println(GLOBAL::NtpServerIP); //NTP Server
+	configFile.println(GLOBAL::ItIs); //Es ist...
+	configFile.println(GLOBAL::ItIsTimeout); //Es ist timeout
 	configFile.close();
 	configFile = LittleFS.open("_configFile", "r");
 	//Log(configFile.readString());
@@ -89,6 +95,8 @@ void resetConfig() {
 	configFile.println(""); //WLAN SSID
 	configFile.println(""); //WLAN Password
 	configFile.println(""); //NTP Server
+	configFile.println(true); //Es ist...
+	configFile.println(true); //Es ist... timeout
 	configFile.close();
 }
 

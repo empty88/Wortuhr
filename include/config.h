@@ -35,4 +35,6 @@ struct GLOBAL {
 	static String WlanSSID;
 	static String WlanPasswd;
 	static String NtpServerIP;
+	static bool ItIs;
+	static bool ItIsTimeout;
 };

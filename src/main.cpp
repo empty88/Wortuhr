@@ -1,6 +1,6 @@
 #include <NeoPixelAnimator.h>
 #include <NeoPixelBrightnessBus.h>
-#include <Timer.h>
+#include "Timer.h"
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include <TimeLib.h>
@@ -24,7 +24,7 @@ const IPAddress _STA_sn = IPAddress(255,255,255,0);
 const char _STA_ssid[] = "wortuhr";
 
 void InitArduinoOTA();
-void CheckWifi();
+void checkWifi();
 String getStringSplitValue(String data, char separator, int index);
 
 /*************************** Sketch Code ************************************/
@@ -67,6 +67,7 @@ void setup() {
 		if (WiFi.status() != WL_CONNECTED) {
 			GLOBAL::WlanPasswd = "";
 			GLOBAL::WlanSSID = "";
+			saveConfig();
 			ESP.restart();
 		}
 
@@ -95,7 +96,7 @@ void setup() {
 		oldYear = year();
 
 		t.every(10000, wordClock);
-		t.every(10000, CheckWifi);
+		t.every(10000, checkWifi);
 
 		// this resets all the neopixels to an off state
 		strip.Begin();
@@ -107,10 +108,7 @@ void loop() {
 	WebServer.handleClient();
 	ArduinoOTA.handle();
 	t.update();
-	delay(100);
 }
-
-
 
 void timeOut() {
 	Serial.println(String(hour()) + ":" + String(minute()));
@@ -164,7 +162,7 @@ String getStringSplitValue(String data, char separator, int index) {
   return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
 
-void CheckWifi() {
+void checkWifi() {
     if (WiFi.status() != WL_CONNECTED) {
         //Log("WiFi disconnected");
         WiFi.reconnect();
