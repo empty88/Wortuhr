@@ -16,7 +16,6 @@ void wordClock(bool force);
 void turnItIsOff();
 
 void test();
-boolean summertime_EU(int year, int month, int day, int hour, int tzHours);
 
 extern std::list<int> clockLetters;
 
